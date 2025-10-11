@@ -70,7 +70,24 @@ const feeds = [
   { url: "https://www.latestlaws.com/feed/" }
 ];
 const rss2json = (url) => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
-let allNews = [];
+async function getAllNews() {
+    setStatus("Loading archive...");
+    let { data: news, error } = await supabase
+        .from("news")
+        .select("*")
+        .order("pubdate", { ascending: false })
+        .limit(300);
+    if (error) {
+        setStatus("Supabase error: " + error.message);
+        news = []; // Guarantee array!
+    } else if (!Array.isArray(news)) {
+        setStatus("No news found in database.");
+        news = [];
+    }
+    allNews = news;
+    renderApp();
+}
+
 let currentSearch = "";
 
 function setStatus(msg) {
@@ -183,7 +200,12 @@ function filterNews(all, searchStr) {
 }
 
 function renderGroupedNews(news) {
-  let articles = [], supreme_court_cases = [], high_court_cases = [];
+      if (!Array.isArray(news)) {
+        setStatus("Error: News data is unavailable or failed to load.");
+        document.getElementById("law-news").innerHTML = "";
+        return;
+    }
+   let articles = [], supreme_court_cases = [], high_court_cases = [];
   news.forEach((item) => {
     const h = (item.title || "").toLowerCase();
     if (h.includes("supreme court")) {
@@ -242,13 +264,14 @@ function renderGroupedNews(news) {
   if (!html.trim()) html = "<p>No news found for your selection.</p>";
   document.getElementById("law-news").innerHTML = html;
 }
-
+console.log("Is array:", Array.isArray(allNews), "Length:", allNews.length);
 function renderApp() {
-  let topNews = filterNews(allNews, "").slice(0, 3);
-  renderTopCarousel(topNews);
-  const filtered = filterNews(allNews, currentSearch);
-  renderGroupedNews(filtered);
-  setStatus(""); // Clear status
+    // Defensive check: allNews is always an array after step 1
+    let topNews = Array.isArray(allNews) ? filterNews(allNews, "").slice(0, 3) : [];
+    renderTopCarousel(topNews);
+    const filtered = Array.isArray(allNews) ? filterNews(allNews, currentSearch) : [];
+    renderGroupedNews(filtered);
+    setStatus("");
 }
 
 async function getAllNews() {
@@ -395,6 +418,12 @@ async function handleSearchOrDateChange(searchStr) {
  */
 async function fetchArchiveNews(searchStr) {
     setStatus("No recent news found. Searching archive...");
+    let { data: archiveNews, error } = await supabase
+        .from('news')
+        .select()
+        .order('pubdate', { ascending: false })
+        .limit(100);
+    if (!Array.isArray(archiveNews)) archiveNews = [];
 
     // Query Supabase DB for older news (customize .limit as needed)
     let { data: archiveNews, error } = await supabase
