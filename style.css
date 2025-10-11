@@ -1,6 +1,7 @@
 /* =============================
    GLOBAL LAYOUT & COLORS
    ============================= */
+
 /* Use Google Fonts everywhere for clean typography */
 body {
   background: #f4f7fa;
@@ -10,6 +11,7 @@ body {
   padding: 2em 10vw; /* White space at sides for elegance */
   transition: background 0.4s, color 0.4s; /* Smooth dark mode switch */
 }
+
 /* Dark mode body styling */
 body.dark-mode {
   background: #181a1b;
@@ -20,9 +22,12 @@ body.dark-mode {
 /* =============================
    HEADER / LOGO AREA / NAV
    ============================= */
+
 /* Sticky header stays at the top as user scrolls */
 .header {
-  position: sticky; top: 0; z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background: #f4f7fa;
 }
 
@@ -43,34 +48,13 @@ body.dark-mode {
   font-size: 1.7em; font-weight: 700; color: #244e86;
 }
 
-/* Sticky header stays at the top as user scrolls */
-.header {
-  position: sticky; top: 0; z-index: 10;
-  background: #f4f7fa;
-}
-
-/* Flexbox for logo, site name, and space management */
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-  padding-bottom: 0.7em;
-}
-.logo { 
-  font-size: 2.3em; background: #244e86; color: #fff;
-  border-radius: 50%; width: 2em; height: 2em;
-  display: flex; align-items: center; justify-content: center;
-}
-.sitename {
-  font-family: 'Montserrat', sans-serif; /* Headline font */
-  font-size: 1.7em; font-weight: 700; color: #244e86;
-}
-
-/* Navigation Bar */
+/* Navigation Bar beneath the header */
 .navbar {
   background: #244e86;
   padding: 0.5em 1em;
-  position: sticky; top: 0; z-index: 9;
+  position: sticky; /* stick to top */
+  top: 0;           /* 0 for demo - set to header height (e.g. 54px) if you want the navbar below header */
+  z-index: 9;
   display: flex; align-items: center; gap: 1.5em;
 }
 
@@ -115,6 +99,7 @@ body.dark-mode {
   background: #244e86; color: #fff; outline: none;
 }
 
+
 /* =============================
    DARK MODE OVERRIDES
    ============================= */
@@ -155,6 +140,7 @@ body.dark-mode #searchBar {
   color: #fff;
   border-color: #888;
 }
+
 
 /* =============================
    NEWS CARDS and GROUPS
@@ -203,6 +189,7 @@ body.dark-mode .news-card,
 body.dark-mode #law-news { background: #232324 !important; color: #ffca28;}
 body.dark-mode .desc   { color: #ffe082 !important; }
 
+
 /* =============================
    RESPONSIVE DESIGN (MOBILE)
    ============================= */
@@ -214,3 +201,7 @@ body.dark-mode .desc   { color: #ffe082 !important; }
   }
   .news-img { width: 100%; height: 160px; }
 }
+
+/* =============================
+   END OF STYLE FILE
+   ============================= */
