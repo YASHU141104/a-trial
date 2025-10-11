@@ -439,3 +439,21 @@ document.getElementById('datePicker').addEventListener('change', async function(
     // Assumes handleSearchOrDateChange(dateStr) can process date-only queries
     await handleSearchOrDateChange(dateStr);
 });
+// Already present, but make sure it is below DOMContentLoaded if you use it!
+document.getElementById('datePicker').addEventListener('change', async function() {
+    let dateStr = this.value; // e.g., "2025-10-11"
+    if (!dateStr) return;
+    await handleSearchOrDateChange(dateStr);
+});
+
+function filterNews(newsArray, searchStr) {
+    // Detects date string
+    if (/^\d{4}-\d{2}-\d{2}$/.test(searchStr)) {
+        return newsArray.filter(item => {
+            if (!item.pubdate) return false;
+            let pubDate = new Date(item.pubdate).toISOString().split('T')[0];
+            return pubDate === searchStr;
+        });
+    }
+    // usual keyword search code...
+}
