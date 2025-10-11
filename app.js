@@ -364,3 +364,69 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.error("Service Worker Registration Failed:", err));
 }
 
+// Attach a search event to your search bar
+document.getElementById('searchBar').addEventListener('input', async function() {
+    const query = this.value.trim().toLowerCase();
+    await handleSearchOrDateChange(query);
+});
+
+/**
+ * Main handler: whenever search or date filter changes,
+ * show weekly news if found, otherwise display archive section.
+ */
+async function handleSearchOrDateChange(searchStr) {
+    // Step 1: Find stories from the past week and filter by search query
+    let weekNews = getWeekStories(allNews);
+    let filtered = filterNews(weekNews, searchStr);
+
+    if (filtered.length > 0) {
+        // Step 2a: If found, render weekly/grouped news in main UI
+        renderGroupedNews(filtered);
+        setStatus(""); // Clear any alert/status messages
+    } else {
+        // Step 2b: If nothing found in weekly news, search the archives
+        await fetchArchiveNews(searchStr);
+    }
+}
+
+/**
+ * Fetch and display archive news when no recent results are found.
+ * Optionally, further filters with search string.
+ */
+async function fetchArchiveNews(searchStr) {
+    setStatus("No recent news found. Searching archive...");
+
+    // Query Supabase DB for older news (customize .limit as needed)
+    let { data: archiveNews, error } = await supabase
+        .from('news')
+        .select()
+        .order('pubdate', { ascending: false })
+        .limit(100);
+
+    if (archiveNews && archiveNews.length > 0) {
+        // If user searched, filter archive results as well
+        let results = searchStr ? filterNews(archiveNews, searchStr) : archiveNews;
+
+        if (results.length === 0) {
+            // No news found in entire archive
+            setStatus("No news found in archives for your search.");
+            document.getElementById('law-news').innerHTML = "";
+            return;
+        }
+        // Render results inside your main results section with a label
+        document.getElementById('law-news').innerHTML = `<h3>Archive Results</h3>`;
+        renderGroupedNews(results);
+        setStatus(""); // Clear
+    } else {
+        // DB has no archived news
+        setStatus("No news found in archives.");
+        document.getElementById('law-news').innerHTML = "";
+    }
+}
+
+/**
+ * Example status function that displays user messages (adapt as needed!)
+ */
+function setStatus(msg) {
+    document.getElementById('statusMsg').textContent = msg;
+}
