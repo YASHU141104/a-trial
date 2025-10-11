@@ -430,3 +430,12 @@ async function fetchArchiveNews(searchStr) {
 function setStatus(msg) {
     document.getElementById('statusMsg').textContent = msg;
 }
+// Add date picker event handler
+document.getElementById('datePicker').addEventListener('change', async function() {
+    // Get the selected date, format is YYYY-MM-DD
+    let dateStr = this.value;
+
+    // Call your central handler with the selected date as the search string
+    // Assumes handleSearchOrDateChange(dateStr) can process date-only queries
+    await handleSearchOrDateChange(dateStr);
+});
