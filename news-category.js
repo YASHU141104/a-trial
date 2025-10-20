@@ -1,0 +1,65 @@
+// ===== SETUP SUPABASE CLIENT =====
+// Replace with your actual Supabase details:
+const supabase = supabase.createClient(
+  'https://YOUR_PROJECT.supabase.co',  // <-- CHANGE THIS TO YOUR Supabase URL
+  'YOUR_PUBLIC_ANON_KEY'               // <-- CHANGE THIS TO YOUR Supabase anon key
+);
+
+// ===== GET CATEGORY FROM URL =====
+const params = new URLSearchParams(window.location.search);
+const category = params.get('category'); // supreme, high, other
+
+// Set page header based on category:
+const categoryTitle = {
+  supreme: "Supreme Court News",
+  high: "High Court News",
+  other: "Other Courts News"
+};
+document.getElementById('categoryTitle').textContent =
+  categoryTitle[category] || "All Legal News";
+
+// ===== FETCH AND DISPLAY CATEGORY NEWS =====
+async function fetchCategoryNews() {
+  let { data: news, error } = await supabase
+    .from('news')
+    .select()
+    .order('pubdate', { ascending: false });
+
+  if (error) {
+    document.getElementById('category-news').textContent = "Error loading news.";
+    return;
+  }
+
+  let filtered = [];
+  if (category === 'supreme') {
+    filtered = news.filter(item => item.title?.toLowerCase().includes('supreme court'));
+  } else if (category === 'high') {
+    filtered = news.filter(item => item.title?.toLowerCase().includes('high court'));
+  } else if (category === 'other') {
+    filtered = news.filter(item =>
+      !item.title?.toLowerCase().includes('supreme court') &&
+      !item.title?.toLowerCase().includes('high court')
+    );
+  } else {
+    filtered = news;
+  }
+  renderCategoryNews(filtered);
+}
+
+// ===== RENDER NEWS =====
+function renderCategoryNews(newsList) {
+  const section = document.getElementById('category-news');
+  if (!newsList.length) {
+    section.textContent = "No news found for this category.";
+    return;
+  }
+  section.innerHTML = newsList.map(item => `
+    <article>
+      <h3>${item.title}</h3>
+      <p>${item.summary || ''}</p>
+      <small>${item.pubdate}</small>
+    </article>
+  `).join('');
+}
+
+fetchCategoryNews();
