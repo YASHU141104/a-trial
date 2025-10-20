@@ -365,24 +365,18 @@ if ('serviceWorker' in navigator) {
 }
 // ===== CATEGORY TAB LOGIC FOR OPENING CATEGORY PAGE IN NEW TAB =====
 
-// This runs after the DOM is loaded:
 document.addEventListener('DOMContentLoaded', function() {
   // Select all tab buttons in the sticky navigation bar
   document.getElementById('categoryTabs').querySelectorAll('.tab-btn').forEach(btn => {
     btn.onclick = function(event) {
-      const cat = btn.dataset.category; // Gets: 'all', 'supreme', 'high', 'other'
+      const cat = btn.dataset.category; // 'all', 'supreme', 'high', 'other'
       if (cat === 'all') {
-         setTab('all'); // Renders homepage/weekly content
+        // For the "All" tab, use homepage function to show All/Weekly news.
+        setTab('all'); // Must be your existing function for weekly/all filtering
       } else {
-        // Opens the category page in a new tab
-        window.open(`news-category.html?category=${cat}`, '_blank');
-        // For "All" tab, use homepage function to show All/Weekly news
-        setTab('all'); // Make sure you have setTab implemented for weekly/all filtering
-      } else {
-        // For other categories, open the category page in a new window/tab
+        // For other categories, open the category page in a new window/tab.
         window.open(`news-category.html?category=${cat}`, '_blank');
       }
     };
   });
 });
-
