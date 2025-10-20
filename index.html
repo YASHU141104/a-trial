@@ -4,38 +4,45 @@
   <meta charset="UTF-8" />
   <title>LegalNewsIndia - Law News</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
   <!-- MAIN STYLESHEET: Contains all site CSS -->
   <link rel="stylesheet" href="style.css" />
+  
   <!-- Google Fonts for consistent font pairing, for headings and text  -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700|Roboto:400,500&display=swap" rel="stylesheet">
+  
   <!-- Favicon for browser tabs -->
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  
   <!-- Progressive Web App manifest for installability and splash screen -->
   <link rel="manifest" href="manifest.json">
+  
   <!-- SEO Metadata for better discoverability in Google and social sharing -->
   <meta name="description" content="Latest Indian legal news—Supreme Court, High Courts, rapid legal updates and expert analysis" />
   <meta property="og:title" content="LegalNewsIndia - Law News" />
   <meta property="og:description" content="Get instant updates from Supreme and High Courts, Indian legal news, judgments, and analysis." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="favicon.png" />
+  
   <!-- Supabase Client Library for database integration -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <!-- ========== MAJOR HEADINGS FOR QUICK NAVIGATION ========== -->
-<!-- Add below your main header (inside <main> or before <section id="law-news">) -->
-<section class="major-headings" aria-label="Major news categories">
-  <h2>
-    <a href="news-category.html?category=supreme" target="_blank">Supreme Court News</a>
-  </h2>
-  <h2>
-    <a href="news-category.html?category=high" target="_blank">High Court News</a>
-  </h2>
-  <h2>
-    <a href="news-category.html?category=other" target="_blank">Other Courts News</a>
-  </h2>
-</section>
-<!-- Weekly news listing stays below, unchanged -->
+  <!-- Place this below your main header or before the weekly news section -->
+  <section class="major-headings" aria-label="Major news categories">
+    <h2>
+      <a href="news-category.html?category=supreme" target="_blank">Supreme Court News</a>
+    </h2>
+    <h2>
+      <a href="news-category.html?category=high" target="_blank">High Court News</a>
+    </h2>
+    <h2>
+      <a href="news-category.html?category=other" target="_blank">Other Courts News</a>
+    </h2>
+  </section>
+  <!-- Weekly news listing stays below, unchanged -->
+
   <!-- ================= HEADER & NAVIGATION ================ -->
   <header class="header" aria-label="Site header">
     <div class="logo-area">
@@ -56,6 +63,7 @@
     <!-- High Court sub-tabs, display only when High Court active -->
     <div class="hc-tabs" id="highCourtTabs" style="display:none" aria-label="High Court filter tabs"></div>
   </header>
+
   <!-- ==================== SEARCH & STATUS ================ -->
   <!-- Search bar for instant filtering by keyword or date -->
   <input type="text" id="searchBar" placeholder="Search news by keywords or date (YYYY-MM-DD)..." autocomplete="off" aria-label="Search bar for legal news"/>
@@ -63,13 +71,14 @@
   <div id="statusMsg" aria-live="polite"></div>
   <!-- Carousel for displaying top, featured, or breaking stories -->
   <div id="top-carousel" aria-label="Highlighted stories carousel"></div>
+
   <!-- ====================== MAIN CONTENT ================== -->
   <main>
     <!-- News list container; filled dynamically by JS -->
     <section id="law-news" aria-label="News articles list">Loading news...</section>
   </main>
+
   <!-- ==================== APP & LOGIC ==================== -->
   <script src="app.js"></script>
 </body>
 </html>
-
