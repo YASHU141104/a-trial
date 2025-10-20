@@ -1,9 +1,10 @@
 // ===== SETUP SUPABASE CLIENT =====
 // Replace with your actual Supabase details:
 const supabase = supabase.createClient(
-const supabase_url = "https://xddssiompemprjbnxxlf.supabase.co";
-const supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkZHNzaW9tcGVtcHJqYm54eGxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMDczNzcsImV4cCI6MjA3Mzc4MzM3N30.QHjF8xdFYp6ex1YW2XV6GkKvPZXNp1biImoQIZdSMG4";
+  'https://xddssiompemprjbnxxlf.supabase.co',  // <-- Must be your actual Supabase URL (see your dashboard)
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkZHNzaW9tcGVtcHJqYm54eGxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyMDczNzcsImV4cCI6MjA3Mzc4MzM3N30.QHjF8xdFYp6ex1YW2XV6GkKvPZXNp1biImoQIZdSMG4'               // <-- Must be your actual public anon key
 );
+
 
 // ===== GET CATEGORY FROM URL =====
 const params = new URLSearchParams(window.location.search);
