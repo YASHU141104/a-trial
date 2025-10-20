@@ -363,4 +363,22 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log("Service Worker Registered!"))
     .catch(err => console.error("Service Worker Registration Failed:", err));
 }
+// ===== CATEGORY TAB LOGIC FOR OPENING CATEGORY PAGE IN NEW TAB =====
+
+// This runs after the DOM is loaded:
+document.addEventListener('DOMContentLoaded', function() {
+  // Select all tab buttons in the sticky navigation bar
+  document.getElementById('categoryTabs').querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = function(event) {
+      const cat = btn.dataset.category; // Gets: 'all', 'supreme', 'high', 'other'
+      if (cat === 'all') {
+        // For "All" tab, use homepage function to show All/Weekly news
+        setTab('all'); // Make sure you have setTab implemented for weekly/all filtering
+      } else {
+        // For other categories, open the category page in a new window/tab
+        window.open(`news-category.html?category=${cat}`, '_blank');
+      }
+    };
+  });
+});
 
