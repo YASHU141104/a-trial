@@ -372,6 +372,10 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.onclick = function(event) {
       const cat = btn.dataset.category; // Gets: 'all', 'supreme', 'high', 'other'
       if (cat === 'all') {
+         setTab('all'); // Renders homepage/weekly content
+      } else {
+        // Opens the category page in a new tab
+        window.open(`news-category.html?category=${cat}`, '_blank');
         // For "All" tab, use homepage function to show All/Weekly news
         setTab('all'); // Make sure you have setTab implemented for weekly/all filtering
       } else {
