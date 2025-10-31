@@ -69,6 +69,7 @@ const feeds = [
   { url: "https://lawbeat.in/rss.xml" },
   { url: "https://www.latestlaws.com/feed/" 
   { url: "https://www.pib.gov.in/allRel.aspx" }
+  { url: "https://www.mea.gov.in/press-releases.htm?51/Press_Releases" }
 ];
 const rss2json = (url) => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
 let allNews = [];
