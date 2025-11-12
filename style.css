@@ -22,7 +22,8 @@ body.dark-mode {
    ============================= */
 /* Sticky header stays at the top as user scrolls */
 .header {
-  position: sticky; top: 0; z-index: 10;
+  position: static; /* Or simply remove position and top */
+  z-index: 10;
   background: #f4f7fa;
 }
 
@@ -69,8 +70,9 @@ body.dark-mode {
 /* Navigation Bar */
 .navbar {
   background: #244e86;
-  padding: 0.5em 1em;
-  position: sticky; top: 0; z-index: 9;
+  position: static; /* Or remove position and top */
+  z-index: 9;
+  background: #244e86;
   display: flex; align-items: center; gap: 1.5em;
 }
 
